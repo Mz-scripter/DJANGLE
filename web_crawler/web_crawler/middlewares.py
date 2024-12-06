@@ -8,6 +8,12 @@ from scrapy import signals
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+from fake_useragent import UserAgent
+
+import time
+from scrapy.downloadermiddlewares.retry import RetryMiddleware
+from scrapy.utils.response import response_status_message
+
 
 class WebCrawlerSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -101,3 +107,35 @@ class WebCrawlerDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+
+class RandomUserAgentMiddleware:
+
+    def __init__(self):
+        self.ua = UserAgent()
+
+    def process_request(self, request, spider):
+        user_agent = self.ua.random
+        request.headers['User-Agent'] = user_agent
+
+
+class CustomRetryMiddleware(RetryMiddleware):
+    def __init__(self, settings):
+        super().__init__(settings)
+        self.retry_wait_time = settings.getint('RETRY_WAIT_TIME', 100)
+    
+    def process_response(self, request, response, spider):
+        if response.status == 429:
+            spider.logger.warning(f"Received 429 Too Many Requests for {request.url}. Retrying after {self.retry_wait_time}s.")
+            time.sleep(self.retry_wait_time)
+            reason = response_status_message(response.status)
+            return self._retry(request, reason, spider) or response
+        return response
+    
+    def process_exception(self, request, exception, spider):
+        return super().process_exception(request, exception, spider)
+    
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler.settings)
