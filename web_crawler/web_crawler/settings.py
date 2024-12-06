@@ -50,9 +50,17 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "web_crawler.middlewares.WebCrawlerDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   "web_crawler.middlewares.WebCrawlerDownloaderMiddleware": 543,
+   'web_crawler.middlewares.RandomUserAgentMiddleware': 400,
+   'web_crawler.middlewares.CustomRetryMiddleware': 543,
+}
+
+# Retry configuration
+RETRY_ENABLED = True
+RETRY_TIMES = 5
+RETRY_HTTP_CODES = [429]
+RETRY_WAIT_TIME = 100
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -68,14 +76,14 @@ ROBOTSTXT_OBEY = False
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-#AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
-#AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
