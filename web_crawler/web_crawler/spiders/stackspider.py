@@ -1,4 +1,6 @@
 import scrapy
+import json
+import os
 
 
 class StackspiderSpider(scrapy.Spider):
@@ -6,12 +8,25 @@ class StackspiderSpider(scrapy.Spider):
     allowed_domains = ["stackoverflow.com"]
     start_urls = ["https://stackoverflow.com/questions/tagged/django"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.existing_urls = set()
+
+        if os.path.exists('stack_django.json'):
+            with open('stack_django.json', 'r', encoding='utf-8') as file:
+                data = json.load(file)
+                self.existing_urls = {item['Question URL'] for item in data}
+
     def parse(self, response):
         questions = response.css('div.s-post-summary')
         for question in questions:
             title = question.css('a.s-link::text').get().strip()
             url = question.css('a.s-link::attr(href)').get()
             full_url = f"https://stackoverflow.com{url}" if url else None
+
+            if full_url in self.existing_urls:
+                print("Question already exists")
+                continue
 
             if full_url:
                 yield response.follow(

@@ -10,9 +10,11 @@ class Command(BaseCommand):
             data = json.load(file)
 
         for item in data:
-            DjangleDb.objects.create(
-                title=item['Question Title'],
+            DjangleDb.objects.get_or_create(
                 url=item['Question URL'],
-                content=item['Question Content'],
+                defaults={
+                    'title': item['Question Title'],
+                    'content': item.get('Question Content', ''),
+                }
             )
         self.stdout.write(self.style.SUCCESS("Data imported successfully!"))
