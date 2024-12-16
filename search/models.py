@@ -1,6 +1,14 @@
 from django.db import models
+from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.indexes import GinIndex
 
 class DjangleDb(models.Model):
     title = models.CharField(max_length=255)
     url = models.URLField(unique=True)
     content = models.TextField()
+    search_vector = SearchVectorField(null=True)
+
+    class Meta:
+        indexes = [
+            GinIndex(fields=['search_vector'])
+        ]
