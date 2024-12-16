@@ -8,8 +8,60 @@
     <title>DJANGLE</title>
 </head>
 <body>
-    <h1 class="text-3xl font-bold text-red-500">Welcome to DJANGLE</h1>
-    {% block content %}
-    {% endblock %}
+    <div class="container mx-auto p-6">
+        <img src="{% static 'images/djangle.jpg' %}" alt="DJANGLE Image" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-32 w-auto">
+
+        <form method="GET" action="" class="flex justify-center relative">
+            <div class="relative w-full max-w-4xl">
+              <input 
+                type="text" 
+                name="q" 
+                placeholder="Search for Django Resources..." 
+                value="{{ request.GET.q|default:'' }}"
+                class="w-full p-3 pl-12 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <!-- Search Icon -->
+              <div class="absolute inset-y-0 left-4 flex items-center text-gray-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-4.35-4.35M16.65 10.35a6.3 6.3 0 11-12.6 0 6.3 6.3 0 0112.6 0z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </form>
+          
+          <!-- Results Section -->
+          <div class="mt-8">
+            {% if request.GET.q %}
+              {% if results %}
+                <h2 class="text-2xl font-semibold mb-4">Results:</h2>
+                <ul class="space-y-4">
+                  {% for result in results %}
+                  <li class="p-4 border rounded-lg shadow-sm hover:shadow-md">
+                    <a href="{{ result.url }}" class="text-blue-500 hover:underline text-lg">
+                      {{ result.title }}
+                    </a>
+                    <p class="text-gray-700 mt-2">
+                      {{ result.content|truncatewords:20 }}
+                    </p>
+                  </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-gray-600 text-center">No results found.</p>
+              {% endif %}
+            {% endif %}
+          </div>
+    </div>
 </body>
 </html>
