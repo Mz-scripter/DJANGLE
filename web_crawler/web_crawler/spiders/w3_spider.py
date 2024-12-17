@@ -1,4 +1,5 @@
 import scrapy
+from bs4 import BeautifulSoup
 
 
 class W3SpiderSpider(scrapy.Spider):
@@ -16,11 +17,14 @@ class W3SpiderSpider(scrapy.Spider):
     
     def parse_page(self, response):
         title = response.css("h1::text").get()
-        content = response.css("div#main").get()
+        raw_html = response.css("div#main").get()
+
+        soup = BeautifulSoup(raw_html, 'html.parser')
+        clean_text = soup.get_text(separator=' ', strip=True)
         url = response.url
 
         yield {
             "title": title,
             "url": url,
-            "content": content,
+            "content": clean_text,
         }
