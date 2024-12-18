@@ -1,12 +1,14 @@
 import scrapy
 import os
 import json
+from bs4 import BeautifulSoup
+from .utils import extract_keywords
 
 
 class GitSpiderSpider(scrapy.Spider):
     name = "git-spider"
     allowed_domains = ["github.com"]
-    start_urls = ["https://github.com/search?q=django&type=repositories&p=38"]
+    start_urls = ["https://github.com/search?q=django&type=repositories&s=forks&o=desc&p=5"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -34,11 +36,18 @@ class GitSpiderSpider(scrapy.Spider):
     def parse_repo(self, response):
         title = response.css('strong.mr-2.flex-self-stretch a::text').get() # repo name
         url = response.url
-        readme = response.css('article.markdown-body').get().strip()
+
+        raw_hmtl = response.css('article.markdown-body').get().strip()
+        soup = BeautifulSoup(raw_hmtl, 'html.parser')
+        clean_text = soup.get_text(separator=' ', strip=True)
+
+        keywords = extract_keywords(clean_text)
 
         yield {
             "title": title,
             "url": url,
-            "content": readme
+            "content": clean_text,
+            "keywords": keywords,
+            "type": "repository"
         }
 
