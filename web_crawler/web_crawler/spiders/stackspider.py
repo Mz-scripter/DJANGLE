@@ -1,6 +1,8 @@
 import scrapy
 import json
 import os
+from bs4 import BeautifulSoup
+from .utils import extract_keywords
 
 
 class StackspiderSpider(scrapy.Spider):
@@ -15,7 +17,7 @@ class StackspiderSpider(scrapy.Spider):
         if os.path.exists('stack_django.json'):
             with open('stack_django.json', 'r', encoding='utf-8') as file:
                 data = json.load(file)
-                self.existing_urls = {item['Question URL'] for item in data}
+                self.existing_urls = {item['url'] for item in data}
 
     def parse(self, response):
         questions = response.css('div.s-post-summary')
@@ -43,10 +45,17 @@ class StackspiderSpider(scrapy.Spider):
     def parse_question(self, response):
         title = response.meta['title']
         url = response.meta['url']
-        content = response.css('div.postcell div.s-prose').get()
+
+        raw_html = response.css('div.postcell div.s-prose').get()
+        soup = BeautifulSoup(raw_html, 'html.parser')
+        clean_content = soup.get_text(separator=' ', strip=True)
+
+        keywords = extract_keywords(clean_content)
 
         yield {
-            'Question Title': title,
-            'Question URL': url,
-            'Question Content': content.strip() if content else None,
+            'title': title,
+            'url': url,
+            'content': clean_content,
+            'keywords': keywords,
+            'type': 'question'
         }
