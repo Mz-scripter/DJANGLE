@@ -30,5 +30,6 @@ class W3SpiderSpider(scrapy.Spider):
             "title": title,
             "url": url,
             "content": clean_text,
-            "keywords": keywords
+            "keywords": keywords,
+            "type": "tutorial"
         }
