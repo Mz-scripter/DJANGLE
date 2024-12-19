@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = "Import scraped data from JSON into the database"
 
     def handle(self, *args, **options):
-        with open('C:/Users/HP/Documents/GitHub/DJANGLE/web_crawler/git-results.json', 'r', encoding='utf-8') as file:
+        with open('C:/Users/HP/Documents/GitHub/DJANGLE/web_crawler/dj-docs.json', 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         for item in data:
