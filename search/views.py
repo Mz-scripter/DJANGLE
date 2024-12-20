@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import SearchResult
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-
+from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 
 def perform_search(query, result_type=None):
     search_query = SearchQuery(query)
@@ -28,4 +28,14 @@ def search_page(request):
         # Perform your search logic here
         results = perform_search(query, result_type)  # Replace with your actual search function
 
-    return render(request, 'search/base.html', {'results': results, 'query': query})
+    # Pagination Setup
+    paginator = Paginator(results, 10)
+    page = request.GET.get('page', 1)
+    try:
+        paginated_results = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_results = paginator.page(1)
+    except EmptyPage:
+        paginated_results = paginator.page(paginator.num_pages)
+
+    return render(request, 'search/base.html', {'results': paginated_results, 'query': query, 'paginator': paginator})
