@@ -20,6 +20,12 @@ class SearchResult(models.Model):
     content = models.TextField()
     keywords = models.JSONField(null=True, blank=True)
     type = models.CharField(max_length=50)
+    search_vector = SearchVectorField(null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            GinIndex(fields=['search_vector'])
+        ]
 
     def __str__(self):
         return self.title
