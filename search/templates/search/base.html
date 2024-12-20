@@ -106,6 +106,17 @@
                   </li>
                   {% endfor %}
                 </ul>
+
+                <!-- Pagination Links -->
+                <div class="mt-8 flex justify-center">
+                  {% if results.has_previous %}
+                    <a href="?q={{ request.GET.q }}&page={{ results.previous_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}" class="text-blue-500 hover:underline">Previous</a>
+                  {% endif %}
+                  <span class="mx-4 text-gray-700">Page {{ results.number }} of {{ results.paginator.num_pages }}</span>
+                  {% if results.has_next %}
+                    <a href="?q={{ request.GET.q }}&page={{ results.next_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}" class="text-blue-500 hover:underline">Next</a>
+                  {% endif %}
+
               {% else %}
                 <p class="text-gray-600 text-center">No results found.</p>
               {% endif %}
