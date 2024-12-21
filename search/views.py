@@ -5,6 +5,7 @@ from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 import time
 from django.http import JsonResponse
 from django.db.models import Q
+from datetime import datetime
 
 def autocomplete(request):
     query = request.GET.get('q', '').strip()
@@ -62,7 +63,8 @@ def search_page(request):
         'query': query,
         'paginator': paginator,
         'total_results': total_results,
-        'search_time': search_time
+        'search_time': search_time,
+        'current_year': datetime.now().year,
     }
 
     return render(request, 'search/base.html', context)
