@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
     <title>DJANGLE</title>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
+  <div class="flex-grow">
     <div class="container mx-auto p-6">
         <a href="{% url 'search-page' %}">
         <img src="{% static 'images/djangle.jpg' %}" alt="DJANGLE Image" class="mx-auto h-16 sm:h-20 md:h-24 lg:h-32 w-auto">
@@ -132,6 +133,37 @@
             {% endif %}
           </div>
     </div>
+  </div>
+
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+      <div class="container mx-auto text-center">
+          <!-- Copyright Text -->
+          <p class="text-sm">&copy; {{ current_year }} DJANGLE. All rights reserved.</p>
+  
+          <!-- Social Media Icons -->
+          <div class="flex justify-center space-x-6 mt-4">
+              <!-- GitHub -->
+              <a href="https://github.com/Mz-scripter" target="_blank" class="text-gray-400 hover:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.57v-2.18c-3.34.73-4.04-1.41-4.04-1.41-.54-1.37-1.32-1.73-1.32-1.73-1.08-.73.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.5 1 .11-.77.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.91 0-1.31.47-2.39 1.23-3.23-.12-.31-.53-1.55.12-3.24 0 0 1-.33 3.3 1.22.95-.26 1.97-.4 2.98-.4 1.01 0 2.03.14 2.98.4 2.3-1.55 3.3-1.22 3.3-1.22.65 1.69.24 2.93.12 3.24.76.84 1.23 1.92 1.23 3.23 0 4.6-2.81 5.6-5.48 5.91.43.38.82 1.11.82 2.23v3.3c0 .31.19.69.79.57C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
+                  </svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/muheez-adeko-1818852b6/" target="_blank" class="text-gray-400 hover:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.5 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.76.78 1.76 1.75-.79 1.76-1.76 1.76zm13.5 12.27h-3v-5.51c0-1.31-.03-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9v5.61h-3v-11h2.89v1.5h.04c.4-.75 1.36-1.54 2.8-1.54 3 0 3.55 1.98 3.55 4.57v6.47z"/>
+                  </svg>
+              </a>
+              <!-- X (Twitter) -->
+              <a href="https://x.com/Mz_Scripter" target="_blank" class="text-gray-400 hover:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 4.56c-.89.39-1.84.65-2.85.77 1.03-.62 1.83-1.6 2.2-2.77-.96.57-2.02.98-3.15 1.2a4.92 4.92 0 0 0-8.4 4.48C7.7 7.69 4.07 5.92 1.64 3.15a4.92 4.92 0 0 0-.67 2.47c0 1.7.86 3.2 2.18 4.08-.8-.02-1.56-.24-2.23-.61v.06c0 2.38 1.69 4.36 3.93 4.81-.41.11-.84.17-1.29.17-.31 0-.61-.03-.91-.09a4.92 4.92 0 0 0 4.6 3.42 9.87 9.87 0 0 1-6.1 2.1c-.39 0-.77-.02-1.15-.07A13.94 13.94 0 0 0 7.55 21c9.04 0 13.98-7.49 13.98-13.98 0-.21 0-.42-.01-.63A9.93 9.93 0 0 0 24 4.56z"/>
+                  </svg>
+              </a>
+          </div>
+      </div>
+    </footer>
+
     <script>
       const inputField = document.getElementById('search-input');
       const clearIcon = document.getElementById('clear-input');
