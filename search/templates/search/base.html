@@ -61,6 +61,11 @@
                 />
               </svg>
           </div>
+
+          <!-- Suggestions dropdown -->
+           <div id="suggestions" class="absolute z-10 bg-white shadow-md w-full rounded-md mt-2 hidden">
+
+           </div>
       </form>
 
           <!-- Tabs Section -->
@@ -145,6 +150,42 @@
           inputField.value = '';       // Clear the input field
           clearIcon.classList.add('hidden');  // Hide the clear icon
           inputField.focus();          // Focus back on the input field
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const inputField = document.getElementById('search-input');
+        const suggestionsBox = document.getElementById('suggestions');
+        const form = inputField.closest('form');
+
+        inputField.addEventListener('input', () => {
+          const query = inputField.value.trim();
+
+          if (query.length > 0) {
+            fetch(`/autocomplete/?q=${encodeURIComponent(query)}`)
+              .then(response => response.json())
+              .then(data => {
+                const suggestions = data.suggestions;
+                if (suggestions.length > 0) {
+                  suggestionsBox.innerHTML = suggestions.map(title => `
+                    <div class="p-2 hover:bg-gray-100 cursor-pointer" onclick="selectSuggestion('${title}')">
+                      ${title}  
+                    </div>
+                  `).join('');
+                  suggestionsBox.classList.remove('hidden');
+                } else {
+                  suggestionsBox.classList.add('hidden');
+                }
+              });
+          } else {
+            suggestionsBox.classList.add('hidden');
+          }
+        });
+        // Handle clicking on a suggestion
+        window.selectSuggestion = (title) => {
+          inputField.value = title;
+          suggestionsBox.classList.add('hidden');
+          form.submit();
+        };
       });
     </script>
 </body>
