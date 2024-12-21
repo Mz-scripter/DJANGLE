@@ -3,6 +3,19 @@ from .models import SearchResult
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 import time
+from django.http import JsonResponse
+from django.db.models import Q
+
+def autocomplete(request):
+    query = request.GET.get('q', '').strip()
+    suggestions = []
+
+    if query:
+        suggestions = SearchResult.objects.filter(
+            Q(title__icontains=query)
+        ).values_list('title', flat=True)[:8]
+    
+    return JsonResponse({'suggestions': list(suggestions)})
 
 def perform_search(query, result_type=None):
     search_query = SearchQuery(query)
