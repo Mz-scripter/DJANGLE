@@ -90,10 +90,14 @@
           {% endif %}
           
           <!-- Results Section -->
+
+          
           <div class="mt-8">
             {% if request.GET.q %}
+            <p class="mt-4 text-sm text-gray-500 mb-3">
+              {{ total_results }} result{{ total_results|pluralize }} found in {{ search_time | floatformat:6 }} seconds.
+             </p>
               {% if results %}
-                
                 <ul class="space-y-4">
                   {% for result in results %}
                   <li class="p-4 border rounded-lg shadow-sm hover:shadow-md">
