@@ -17,6 +17,7 @@ cryptography==44.0.0
 cssselect==1.2.0
 cymem==2.0.10
 defusedxml==0.7.1
+dj-database-url==2.3.0
 Django==5.1.4
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85
 fake-useragent==2.0.0
