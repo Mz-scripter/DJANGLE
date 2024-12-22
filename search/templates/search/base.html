@@ -73,7 +73,7 @@
 
           <!-- Tabs Section -->
           {% if request.GET.q %}
-          <div class="mt-8 flex justify-center space-x-6 border-b pb-2 overflow-x-auto whitespace-nowrap">
+          <div class="mt-8 space-x-6 border-b pb-2 overflow-x-auto whitespace-nowrap">
             <a href="?q={{ request.GET.q }}" 
                class="text-gray-700 hover:text-blue-500  {% if not request.GET.type %}border-b-2 border-blue-500 font-semibold{% endif %}">
                All
