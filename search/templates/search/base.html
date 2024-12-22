@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DJANGLE is a specialized search engine for Django developers, offering curated results for questions, documentation, tutorials, and repositories.">
     <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'images/D.png' %}">
     <title>DJANGLE</title>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -71,7 +73,7 @@
 
           <!-- Tabs Section -->
           {% if request.GET.q %}
-          <div class="mt-8 flex justify-center space-x-6 border-b pb-2">
+          <div class="mt-8 flex justify-center space-x-6 border-b pb-2 overflow-x-auto whitespace-nowrap">
             <a href="?q={{ request.GET.q }}" 
                class="text-gray-700 hover:text-blue-500  {% if not request.GET.type %}border-b-2 border-blue-500 font-semibold{% endif %}">
                All
@@ -167,6 +169,7 @@
     <script>
       const inputField = document.getElementById('search-input');
       const clearIcon = document.getElementById('clear-input');
+      const suggestionBox = document.getElementById('suggestions');
   
       // Show or hide the clear icon based on input
       inputField.addEventListener('input', () => {
@@ -181,9 +184,9 @@
       clearIcon.addEventListener('click', () => {
           inputField.value = '';       // Clear the input field
           clearIcon.classList.add('hidden');  // Hide the clear icon
-          inputField.focus();          // Focus back on the input field
+          inputField.focus();    
+          suggestionBox.classList.add('hidden');
       });
-
       document.addEventListener('DOMContentLoaded', () => {
         const inputField = document.getElementById('search-input');
         const suggestionsBox = document.getElementById('suggestions');
