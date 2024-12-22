@@ -20,3 +20,6 @@ python manage.py import_scraped_data web_crawler/dj-index2.json
 python manage.py import_scraped_data web_crawler/git-results.json
 python manage.py import_scraped_data web_crawler/w3-results.json
 python manage.py import_scraped_data web_crawler/stack_django2.json
+
+# Add Index
+python manage.py update_search_index
