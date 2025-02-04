@@ -5,9 +5,6 @@ set -o errexit
 # Modify this line as needed for your package manager (pip, poetry, etc.)
 pip install -r requirements.txt
 
-# Compile tailwindcss
-npx tailwindcss -i ./static/css/styles.css -o ./static/css/tailwind_output.css --minify
-
 # Convert static asset files
 python manage.py collectstatic --no-input
 
