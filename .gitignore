@@ -1,3 +1,10 @@
 venv
 
-**/tailwind_output.css
+*.pyc
+*.pyo
+__pycache__/
+
+.vscode/
+*.idea/
+
+db.sqlite3
