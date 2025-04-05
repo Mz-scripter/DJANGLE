@@ -112,7 +112,7 @@
     python manage.py runserver
     ```
 
-## Screenshots
+## Screenshots📸
 
 ### Home Page
 ![home-page](https://github.com/user-attachments/assets/ec97c6ac-9a8b-406f-9f52-7059e0222770)
